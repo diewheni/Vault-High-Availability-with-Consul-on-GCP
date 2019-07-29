@@ -17,12 +17,11 @@ resource "google_compute_instance" "consul" {
     initialize_params {
       image = "ubuntu-os-cloud/ubuntu-1804-lts"
       type = "pd-ssd"
+      size = 10
     }
   }
 
-  # Local SSD disk
-  scratch_disk {
-  }
+
 
   network_interface {
     network = "default"
@@ -55,13 +54,13 @@ cat << EOF > /usr/local/etc/consul/server_agent.json
 {
   "server": true,
   "node_name": "consul-${count.index}", 
-  "datacenter": "dc1",
+  "datacenter": "us-east1",
   "data_dir": "/var/consul/data",
   "bind_addr": "0.0.0.0",
   "client_addr": "0.0.0.0",
   "advertise_addr": "$(curl "http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/ip" -H "Metadata-Flavor: Google")",
-  "bootstrap_expect": 3,
-  "retry_join": ["provider=gce project_name=prime-cosmos-239513 tag_value=consul"],
+  "bootstrap_expect": 2,
+  "retry_join": ["provider=gce project_name=${var.gcloud-project} tag_value=consul"],
   "ui": true,
   "log_level": "DEBUG",
   "enable_syslog": true,
