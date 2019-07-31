@@ -26,7 +26,7 @@ cat << EOF > /usr/local/etc/consul/config.json
   "client_addr": "0.0.0.0",
   "advertise_addr": "$(curl "http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/ip" -H "Metadata-Flavor: Google")",
   "bootstrap_expect": 2,
-  "retry_join": ["provider=gce project_name=${gcloud-project} tag_value=consul"],
+  "retry_join": ["provider=gce project_name=${project} tag_value=consul"],
   "ui": true,
   "log_level": "DEBUG",
   "enable_syslog": true,

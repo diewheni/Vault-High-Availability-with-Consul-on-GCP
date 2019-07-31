@@ -1,5 +1,5 @@
 resource "google_compute_router" "this" {
-  name    = "testme"
+  name    = "this"
   network = var.network
 
   bgp {
@@ -10,13 +10,7 @@ resource "google_compute_router" "this" {
 resource "google_compute_router_nat" "this" {
   name                               = "test"
   router                             = google_compute_router.this.name
-  region                             = var.gcloud-region
-  nat_ip_allocate_option             = "MANUAL_ONLY"
-  nat_ips                            = [google_compute_address.this.self_link]
+  region                             = var.region
+  nat_ip_allocate_option             = "AUTO_ONLY"
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
-}
-
-resource "google_compute_address" "this" {
-  name   = "myipaddress"
-  region = var.gcloud-region
 }
