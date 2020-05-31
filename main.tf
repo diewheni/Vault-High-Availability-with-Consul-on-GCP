@@ -3,7 +3,7 @@ provider "google" {
   project = var.project
   region  = var.region
 }
-
+g
 
 terraform {
   required_version = ">= 0.12"
