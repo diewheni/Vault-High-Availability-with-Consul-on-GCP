@@ -7,7 +7,7 @@ f
 terraform {
   required_version = ">= 0.12"
 }
-
+ 
 module "consul" {
   source     = "./modules/consul"
   region     = var.region
